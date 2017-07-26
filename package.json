@@ -20,5 +20,8 @@
   "bugs": {
     "url": "https://github.com/Jamesbillard12/08-vanilla_rest_api/issues"
   },
-  "homepage": "https://github.com/Jamesbillard12/08-vanilla_rest_api#readme"
+  "homepage": "https://github.com/Jamesbillard12/08-vanilla_rest_api#readme",
+  "dependencies": {
+    "uuid": "^3.1.0"
+  }
 }
