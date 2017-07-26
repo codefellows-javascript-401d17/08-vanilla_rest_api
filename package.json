@@ -1,0 +1,32 @@
+{
+  "name": "08-vanilla_rest_api",
+  "version": "1.0.0",
+  "description": "![cf](https://i.imgur.com/7v5ASc8.png) Lab 08: Vanilla REST API ======",
+  "main": "server.js",
+  "directories": {
+    "test": "test"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Loaye/08-vanilla_rest_api.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Loaye/08-vanilla_rest_api/issues"
+  },
+  "homepage": "https://github.com/Loaye/08-vanilla_rest_api#readme",
+  "devDependencies": {
+    "chair": "0.0.0",
+    "mocha": "^3.4.2",
+    "superagent": "^3.5.2"
+  },
+  "dependencies": {
+    "uuid": "^3.1.0"
+  }
+}
