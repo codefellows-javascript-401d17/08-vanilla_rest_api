@@ -39,7 +39,7 @@ router.get('/api/beer', function(req, res) {
 
 router.post('/api/beer', function(req, res) {
   try {
-    var beer = new Beer(req.body.name, req.body.content);
+    var beer = new Beer(req.body.name, req.body.style, req.body.IBU);
     storage.createItem('beer', beer);
     res.writeHead(200, {
       'Content-Type': 'application/json'

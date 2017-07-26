@@ -22,6 +22,7 @@
   },
   "homepage": "https://github.com/Jamesbillard12/08-vanilla_rest_api#readme",
   "dependencies": {
+    "superagent": "^3.5.2",
     "uuid": "^3.1.0"
   },
   "devDependencies": {
