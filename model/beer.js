@@ -2,13 +2,11 @@
 
 const uuidv4 = require('uuid/v4');
 
-module.exports = function(name, style, ibu){
-  if(!name) throw new Error('There was no name entered');
-  if(!style) throw new Error('There was no style entered');
-  if(!ibu) throw new Error('There was no style entered');
+module.exports = function(name, style) {
+  if (!name) throw new Error('expected name');
+  if (!style) throw new Error('expected content');
 
   this.id = uuidv4();
   this.name = name;
   this.style = style;
-  this.ibu = ibu;
 };
