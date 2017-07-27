@@ -6,6 +6,7 @@ const Router = require('./lib/router.js');
 const storage = require('./lib/storage.js');
 const PORT = process.env.PORT || 3000;
 const router = new Router();
+
 //GET Route
 router.get('/api/note', function(req, res) {
   if (req.url.query.id) {
@@ -28,7 +29,7 @@ router.get('/api/note', function(req, res) {
     });
 
     return;
-  };
+  }
 
   res.write(400, {
     'Content-Type': 'text/plain'
@@ -36,6 +37,7 @@ router.get('/api/note', function(req, res) {
   res.write('bad request');
   res.end();
 });
+
 //POST Route
 router.post('/api/car', function(req, res) {
   try {
@@ -56,6 +58,7 @@ router.post('/api/car', function(req, res) {
     res.end();
   }
 });
+
 // DELETE Route
 router.delete('.api/car', function(req, res) {
   if(req.url.query.id) {
@@ -77,7 +80,7 @@ router.delete('.api/car', function(req, res) {
     });
 
     return;
-  };
+  }
 
   res.writeHead(400, {
     'Content-Type': 'text/plain'
@@ -89,5 +92,5 @@ router.delete('.api/car', function(req, res) {
 const server = http.createServer(router.route());
 
 server.listen(PORT, () => {
-  console.log('SERVER IS UP:', PORT);
+  console.log('SERVER IS UP SON!:', PORT);
 });

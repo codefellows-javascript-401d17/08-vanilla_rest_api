@@ -28,7 +28,7 @@ Router.prototype.delete = function(endpoint, callback) {
   this.routes.DELETE[endpoint] = callback;
 };
 
-Router.prototype.routes = function() {
+Router.prototype.route = function() {
   return (req, res) => {
     Promise.all([
       parseUrl(req),
