@@ -35,7 +35,7 @@ Router.prototype.route = function() {
       parseJSON(req)
     ])
     .then(() => {
-      let reqMethod = his.routes[req.method];
+      let reqMethod = this.routes[req.method];
       if(typeof reqMethod[req.url.pathname] === 'function') {
         reqMethod[req.url.pathname](req, res);
         return
@@ -57,7 +57,7 @@ Router.prototype.route = function() {
       })
 
       res.write('bad request');
-      res.end()
+      res.end();
     });
   }
 };
