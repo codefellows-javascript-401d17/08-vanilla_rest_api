@@ -30,8 +30,9 @@ Router.prototype.put = function(endpoint, callback) {
 
 Router.prototype.route = function() {
   return (req, res) => {
+    console.log(req.url.pathname);
     Promise.all([
-      parseUur(req),
+      parseUrl(req),
       parseJSON(req)
     ])
     .then(() => {
