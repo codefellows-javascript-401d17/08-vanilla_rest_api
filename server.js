@@ -29,13 +29,13 @@ router.get('/api/note', function(req, res) {
     });
 
     return;
-  }
+  };
 
   res.writeHead(400, {
     'Content-Type': 'text/plain'
   });
 
-  res.write('response not found');
+  res.write('bad request');
   res.end();
 });
 
@@ -56,10 +56,12 @@ router.post('/api/note', function(req, res) {
     res.writeHead(400, {
       'Content-Type': 'text/plain'
     });
+    res.write('bad request');
+    res.end();
   }
 });
 
-const server = http.createServer();
+const server = http.createServer(router.route());
 
 server.listen(PORT, function() {
   console.log(`Server listening on PORT: ${PORT}`);
