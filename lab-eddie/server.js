@@ -31,7 +31,7 @@ const modelRoutes = function(model) {
         res.writeHead(404, {
           'Content-Type': 'text/plain'
         });
-        res.write('note not found');
+        res.write(`${model} not found`);
         res.end();
       });
 
@@ -85,7 +85,7 @@ const modelRoutes = function(model) {
         res.writeHead(404, {
           'Content-Type': 'text/plain'
         });
-        res.write('note not found');
+        res.write(`${model} not found`);
         res.end();
       });
 
