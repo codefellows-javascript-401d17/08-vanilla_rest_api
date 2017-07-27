@@ -55,3 +55,6 @@
 
 ## Bonus
 * **2pts:** a `GET` request to `/api/simple-resource-name` with no **?id=** should return an array of all of the ids for that resource
+
+## Questions and Observations
+###### I spent a very long time looking for a bug that didn't really exist, it turns out that I never actually passed my router into my http createserver and I spent hours upon hours trying to fix things that weren't even broken. Once I figured that out in class the rest of the assignment was rather easy, adding the delete and put methods was fairly straight forward. 
