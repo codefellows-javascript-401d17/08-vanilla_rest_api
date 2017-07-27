@@ -1,7 +1,7 @@
 'use strict';
 
 module = function(req) {
-  return new Promise((res, rej) => {
+  return new Promise((resolve, reject) => {
     if(req.method === 'POST' || req.method === 'PUT') {
       var body = '';
 
