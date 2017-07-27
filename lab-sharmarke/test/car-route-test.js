@@ -56,7 +56,7 @@ describe('Car Routes', function() {
       });
     });
     it('should return 400', function(done) {
-      request.get('localhost:8000/api/car?id=1')
+      request.get('localhost:8000/api/car')
       .end((err, res) => {
         expect(res.status).to.equal(400);
         console.log('get 400');

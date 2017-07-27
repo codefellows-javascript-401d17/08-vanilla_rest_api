@@ -9,9 +9,16 @@ const router = new Router();
 
 //GET Route
 router.get('/api/car', function(req, res) {
+  console.log('hit GET /api/car route');
+
+  console.log('req.url.query.id: ', req.url.query.id);
+
   if (req.url.query.id) {
     storage.fetchItem('car', req.url.query.id)
-    .then( car => {
+    .then((car) => {
+
+      console.log('car schema: ', car);
+
       res.writeHead(200, {
         'Content-Type': 'application/json'
       });
@@ -19,7 +26,7 @@ router.get('/api/car', function(req, res) {
       res.write(JSON.stringify(car));
       res.end();
     })
-    .catch( err => {
+    .catch((err) => {
       console.error(err);
       res.writeHead(404, {
         'Content-Type': 'text/plain'
