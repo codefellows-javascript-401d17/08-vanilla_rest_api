@@ -29,7 +29,6 @@ router.get('/api/drone', function (req, rsp) {
   if (!req.url.query.id) {
     storage.fetchAllItems('drone')
       .then(function (drones) {
-        console.log('line 32', drones);
         rsp.writeHead(200);
         rsp.write(JSON.stringify(drones));
         rsp.end();
