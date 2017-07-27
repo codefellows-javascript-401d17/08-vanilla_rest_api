@@ -8,10 +8,10 @@ Storage.prototype.add = function(categoryName, item) {
   let category = this[categoryName];
 
   if (!category) {
-    category = {};
+    this[categoryName] = {};
   }
 
-  category[item.id] = item;
+  this[categoryName][item.id] = item;
 };
 
 Storage.prototype.get = function(categoryName, id) {

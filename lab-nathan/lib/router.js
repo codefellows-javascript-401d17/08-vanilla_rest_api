@@ -33,24 +33,36 @@ Router.prototype.addMiddleware = function(promise) {
   this.middleware.push(promise);
 };
 
-Router.prototype.route = function(request, response) {
-  Promise.all(this.middleware)
-    .then(() => {
-      let endpoint = request.url.pathname;
-      let method = request.method;
+Router.prototype.route = function() {
+  return (request, response) => {
+    Promise.all(this.middleware.map(m => m(request)))
+      .then(() => {
+        let endpoint = request.url.pathname;
+        let method = request.method;
 
-      let callback = this.routes[method][endpoint];
+        let callback = this.routes[method][endpoint];
 
-      if (callback) {
-        callback(request, response);
-        return;
-      }
+        if (callback) {
+          callback(request, response);
+          return;
+        }
 
-      response.writeHead(404, {
-        'Content-Type': 'text/plain'
+        response.writeHead(404, {
+          'Content-Type': 'text/plain'
+        });
+
+        response.write('Route not found.');
+        response.end();
+      })
+      .catch(function(err) {
+        console.error(err);
+
+        response.writeHead(400, {
+          'Content-Type': 'text/plain'
+        });
+
+        response.write('Bad request.');
+        response.end();
       });
-
-      response.write('Route not found.');
-      response.end();
-    });
+  };
 };
