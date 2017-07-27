@@ -1,12 +1,12 @@
 'use strict';
 
-const uuid4v = require('uuid/v4');
+const uuidv4 = require('uuid/v4');
 
 module.exports = function(name, content){
-  if(!name) throw new Error('must enter a name');
-  if(!content) throw new Error('must enter content');
+  if(!name) throw new Error('expected name');
+  if(!content) throw new Error('expected content');
 
-  this.id = uuid4v();
+  this.id = uuidv4();
   this.name = name;
   this.content = content;
 };
