@@ -60,6 +60,7 @@ router.delete('api/song', function(req, res) {
       res.writeHead(204, {
         'Content-type': 'text/plain'
       });
+      res.end();
     })
     .catch( err => {
       console.error(err);
