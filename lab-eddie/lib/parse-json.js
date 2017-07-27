@@ -2,12 +2,11 @@
 
 module.exports = function(req) {
   return new Promise((resolve, reject) => {
-    if(req.method === 'POST' || req.method === 'PUT') {
+    if (req.method === 'POST' || req.method === 'PUT') {
       var body = '';
 
       req.on('data', data => {
         body += data.toString();
-        console.log(body)
       });
 
       req.on('end', () => {
@@ -25,9 +24,11 @@ module.exports = function(req) {
         reject(err);
       });
 
-      return
-    }
+      return;
+    };
 
     resolve();
   });
 }
+
+

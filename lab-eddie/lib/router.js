@@ -30,7 +30,8 @@ Router.prototype.put = function(endpoint, callback) {
 
 Router.prototype.route = function() {
   return (req, res) => {
-    console.log(req.url.pathname);
+    console.log(parseJSON(req));
+    console.log()
     Promise.all([
       parseUrl(req),
       parseJSON(req)
@@ -41,9 +42,8 @@ Router.prototype.route = function() {
         reqMethod[req.url.pathname](req, res);
         return
       }
-
+      console.log('right here ass hole')
       console.error('route not found');
-
       res.writeHead(404, {
         'Content-Type' : 'text/plain'
       });

@@ -64,7 +64,12 @@ const modelRoutes = function(model) {
 
   router.post(`/api/${model}`, function(req, res) {
     try {
-      var newObj = new models[model](...req.body);
+      let params = [];
+      for(let key in req.body) {
+        params.push(req.body[key]);
+      }
+      var newObj = new models[model](...params);
+      console.log(newObj)
       storage.createItem(`${model}`, newObj);
       res.writeHead(200, {
         'Content-Type' : 'application/json'
