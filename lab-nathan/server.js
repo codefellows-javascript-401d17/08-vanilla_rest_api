@@ -6,6 +6,7 @@ const Storage = require('./lib/storage.js');
 const parseJson = require('./lib/parse-json.js');
 const parseUrl = require('./lib/parse-url.js');
 const Note = require('./model/note.js');
+const Contact = require('./model/contact.js');
 
 const router = new Router();
 const storage = new Storage();
@@ -23,6 +24,19 @@ router.handlePost('/api/note', function(request, response) {
   catch(error) {
     console.error(error);
     respond(response, 400, 'Could not add note.');
+  }
+});
+
+router.handlePost('/api/contact', function(request, response) {
+  try {
+    let contact = new Contact(request.body.firstName, request.body.lastName, request.body.email, request.body.phone);
+    storage.add('contacts', contact);
+    respond(response, 200, JSON.stringify(contact), 'application/json');
+    return;
+  } 
+  catch(error) {
+    console.error(error);
+    respond(response, 400, 'Could not add contact.');
   }
 });
 
@@ -44,6 +58,24 @@ router.handleGet('/api/note', function(request, response) {
   }
 });
 
+router.handleGet('/api/contact', function(request, response) {
+  let id = request.url.query.id;
+
+  if (!id) {
+    respond(response, 200, JSON.stringify(Object.keys(storage['contacts'])), 'application/json');
+    return;
+  }
+
+  try {
+    let note = storage.get('contacts', id);
+    respond(response, 200, JSON.stringify(note), 'application/json');
+  } 
+  catch(error) {
+    console.error(error);
+    respond(response, 404, error.message);
+  }
+});
+
 router.handleDelete('/api/note', function(request, response) {
   let id = request.url.query.id;
 
@@ -54,6 +86,24 @@ router.handleDelete('/api/note', function(request, response) {
 
   try {
     storage.remove('notes', id);
+    respond(response, 204, null, null);
+  } 
+  catch(error) {
+    console.error(error);
+    respond(response, 404, error.message);
+  }
+});
+
+router.handleDelete('/api/contact', function(request, response) {
+  let id = request.url.query.id;
+
+  if (!id) {
+    respond(response, 200, 'No id provided.');
+    return;
+  }
+
+  try {
+    storage.remove('contacts', id);
     respond(response, 204, null, null);
   } 
   catch(error) {

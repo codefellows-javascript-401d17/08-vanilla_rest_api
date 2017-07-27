@@ -21,7 +21,7 @@ Storage.prototype.get = function(categoryName, id) {
     return category[id];
   }
 
-  throw new Error(`No note exists with an id ${id}`);
+  throw new Error(`No item in ${categoryName} exists with an id ${id}`);
 };
 
 Storage.prototype.remove = function(categoryName, id) {
@@ -32,5 +32,5 @@ Storage.prototype.remove = function(categoryName, id) {
     return;
   }
 
-  throw new Error(`No note exists with an id ${id}`);
+  throw new Error(`No item in ${categoryName} exists with an id ${id}`);
 };
