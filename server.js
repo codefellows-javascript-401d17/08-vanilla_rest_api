@@ -1,7 +1,7 @@
 'use strict';
 
 const http = require('http');
-const Dessert = require('./model/dessert.js');
+const Note = require('./model/note.js');
 const Router = require('./lib/router.js');
 const storage = require('./lib/storage.js');
 const PORT = process.env.PORT || 8000;
@@ -41,7 +41,7 @@ router.get('/api/note', function(req, res) {
 
 router.post('/api/note', function(req, res) {
   try {
-    var note = new Dessert(req.body.name, req.body.content);
+    var note = new Note(req.body.name, req.body.content);
     storage.createItem('note', note);
 
     res.writeHead(200, {
