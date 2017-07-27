@@ -35,10 +35,10 @@ router.get('/api/drone', function (req, rsp) {
 
 router.post('/api/drone', function (req, rsp) {
   try {
-    var drone = new Drone(req.body.name, req.body.content);
+    var drone = new Drone(req.body.model, req.body.rotors);
     storage.createItem('drone', drone);
     rsp.writeHead(200, {
-      'Content-Type': 'application/json';
+      'Content-Type': 'application/json'
     });
     rsp.write(JSON.stringify(drone));
     rsp.end();
@@ -52,7 +52,7 @@ router.post('/api/drone', function (req, rsp) {
   }
 })
 
-const server = http.createServer(router.route()); //returns function (req, rsp) { ... }
+const server = http.createServer(router.route()); //returns function w/ req, rsp
 
 server.listen(PORT, function () {
   console.log('server running on ', PORT);
