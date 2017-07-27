@@ -4,6 +4,11 @@ const request = require('superagent');
 const expect = require('chai').expect;
 require('../server.js');
 
+before(function () {
+  request.post('localhost:8000/api/drone')
+    .send({ model: 'Phantom VI', rotors: 9 });
+})
+
 describe('Drone Routes', function () {
   var drone = null; //initialize drone for tests
   describe('POST: /api/drone', function () {
@@ -36,7 +41,6 @@ describe('Drone Routes', function () {
     it('should delete a drone', function (done) {
       request.delete(`localhost:8000/api/drone?id=${drone.id}`)
         .end(function (err, res) {
-          console.log('line 40 test', res.body);
           if (err) return done(err);
           expect(res.status).to.equal(204);
           expect(res.body).to.be.empty;
@@ -44,5 +48,4 @@ describe('Drone Routes', function () {
         });
     });
   });
-  //TODO: for delete, does not return a note. Just status code 204, and make call and verify not there.
 });

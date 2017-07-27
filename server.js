@@ -54,10 +54,10 @@ router.post('/api/drone', function (req, rsp) {
 
 router.delete('/api/drone', function (req, rsp) {
   if (req.url.query.id) {
-    console.log('line 57 server.js... id: ', req.url.query.id)
     storage.deleteItem('drone', req.url.query.id)
-      .then(function (storage) {
+      .then( () => {
         rsp.writeHead(204);
+        rsp.end();
       })
       .catch(function(err) {
         console.error(err);
