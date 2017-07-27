@@ -10,4 +10,5 @@ module.exports = function(make, model, year) {
   this.id = uuidv4();
   this.make = make;
   this.model = model;
+  this.year = year;
 };
