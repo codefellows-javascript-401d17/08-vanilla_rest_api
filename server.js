@@ -1,21 +1,21 @@
 'use strict';
 
 const http = require('http');
-const Note = require('./model/note.js');
+const Bake = require('./model/bake.js');
 const Router = require('./lib/router.js');
 const storage = require('./lib/storage.js');
 const PORT = process.env.PORT || 3000;
 const router = new Router();
 
-router.get('/api/note', function(req, res) {
+router.get('/api/bake', function(req, res) {
   if (req.url.query.id) {
-    storage.fetchItem('note', req.url.query.id)
-    .then( note => {
+    storage.fetchItem('bake', req.url.query.id)
+    .then( bake => {
       res.writeHead(200, {
         'Content-Type': 'application/json'
       });
 
-      res.write(JSON.stringify(note));
+      res.write(JSON.stringify(bake));
       res.end();
     })
     .catch( err => {
@@ -24,7 +24,7 @@ router.get('/api/note', function(req, res) {
         'Content-Type': 'text/plain'
       });
 
-      res.write('note not found');
+      res.write('baked good not found');
       res.end();
     });
 
@@ -39,16 +39,16 @@ router.get('/api/note', function(req, res) {
   res.end();
 });
 
-router.post('/api/note', function(req, res) {
+router.post('/api/bake', function(req, res) {
   try {
-    var note = new Note(req.body.name, req.body.content);
-    storage.createItem('note', note);
+    var bake = new Bake(req.body.bakedGood, req.body.description, req.body.calories);
+    storage.createItem('bake', bake);
 
     res.writeHead(200, {
       'Content-Type': 'application/json'
     });
 
-    res.write(JSON.stringify(note));
+    res.write(JSON.stringify(bake));
     res.end();
   } catch (err) {
     console.error(err);
@@ -59,6 +59,12 @@ router.post('/api/note', function(req, res) {
     res.end();
   }
 });
+
+router.delete('/api/bake', function(req, res) {
+  if (req.url.query.id) {
+    storage.deleteItem('bake', req.url.query.id);
+  }
+})
 
 const server = http.createServer(router.route());
 
