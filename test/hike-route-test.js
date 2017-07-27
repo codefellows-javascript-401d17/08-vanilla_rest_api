@@ -8,7 +8,7 @@ require('../server.js');
 describe('Hike Routes', function(){
   var hike = null;
 
-  describe('Post: /api/hike', function(){
+  describe('POST: /api/hike', function(){
     it('should return a hike', function(done){
       request.post('localhost:8000/api/hike')
       .send({name:'some cool hike', distance: '3.4 miles', difficulty: 'medium', description:'a cool hike'})
@@ -29,7 +29,8 @@ describe('Hike Routes', function(){
       .send({name:'some cool hike', blue: '3.4 miles'})
       .end((err, res) => {
         expect(res.status).to.equal(400);
-        expect(res.status).to.equal('bad request');
+        expect(res.text).to.equal('bad request');
+        done();
       });
     });
   });
@@ -52,19 +53,17 @@ describe('Hike Routes', function(){
       });
     });
     it('should return an error(404)', function(done){
-      request.get('localhost:8000/api/hike?id=z')
+      request.get('localhost:8000/api/hike?id=123456')
       .end((err, res) => {
         expect(res.status).to.equal(404);
-        expect(res.body).to.equal('hike not found!');
         done();
       });
     });
 
     it('should return bad request (400)', function(done){
-      request.get('localhost:8000/api/song?=1234567')
+      request.get('localhost:8000/api/hike?=1234567')
       .end(function(err,res){
         expect(res.status).to.equal(400);
-        expect(res.body).to.equal('bad requst');
         done();
       });
     });

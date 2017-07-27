@@ -39,7 +39,7 @@ router.get('/api/hike', function(req, res){
 
 router.post('/api/hike', function(req, res){
   try{
-    var hike = new Hike(req.body.name, req.body.content);
+    var hike = new Hike(req.body.name, req.body.distance, req.body.difficulty, req.body.description);
     storage.createItem('hike', hike);
     res.writeHead(200, {
       'Content-Type': 'application/json'
@@ -57,25 +57,28 @@ router.post('/api/hike', function(req, res){
 });
 
 router.delete('/api/hike', function(req, res){
-  if(!req.url.query.id){
-    res.writeHead(400, {
-      'Content-Type': 'text/plain'
+  if(req.url.query.id) {
+    storage.deleteItem('hike', req.url.query.id)
+    .then( () => {
+      res.writeHead(204, {
+        'Content-type': 'text/plain'
+      });
+      res.end();
+    })
+    .catch( err => {
+      console.error(err);
+      res.writeHead(404, {
+        'Content-type': 'text/plain'
+      });
+      res.write('hike not found');
+      res.end();
     });
-    res.write('bad request, need a query url');
-    res.end();
+    return;
   }
-  if(!server.storage[req.url.query.id]) {
-    res.writeHead(404, {
-      'Content-Type' : 'text/plain'
-    });
-    res.write(`Hike ${req.url.query.id} not found`);
-    res.end();
-  }
-  delete server.storage[req.url.query.id];
-  res.writeHead(204, {
-    'Content-Type': 'plain/text'
+  res.writeHead(400, {
+    'Content-type': 'text/plain'
   });
-  res.write(`hike ${req.url.query.id} deleted`);
+  res.write('bad request');
   res.end();
 });
 
