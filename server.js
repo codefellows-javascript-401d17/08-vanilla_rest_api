@@ -27,7 +27,7 @@ router.get('/api/drone', function (req, rsp) {
     return;  //TODO: why this here?
   }
   rsp.writeHead(400, {
-    'Content-type' : 'text/plain'
+    'Content-type': 'text/plain'
   })
   rsp.write('bad request');
   rsp.end();
@@ -49,6 +49,22 @@ router.post('/api/drone', function (req, rsp) {
     })
     rsp.write('drone not found request');
     rsp.end();
+  }
+});
+
+router.delete('/api/drone', function (req, rsp) {
+  if (req.url.query.id) {
+    console.log('line 57 server.js... id: ', req.url.query.id)
+    storage.deleteItem('drone', req.url.query.id)
+      .then(function (storage) {
+        rsp.writeHead(204);
+      })
+      .catch(function(err) {
+        console.error(err);
+        rsp.writeHead(400);
+        rsp.write('drone not found');
+        rsp.end();
+      });
   }
 })
 

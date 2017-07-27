@@ -11,7 +11,6 @@ describe('Drone Routes', function () {
       request.post('localhost:8000/api/drone')
         .send({ model: 'Phantom III', rotors: 3 })
         .end((err, res) => {
-          console.log(res.body);
           if (err) return done(err);
           expect(res.status).to.equal(200);
           expect(res.body.model).to.equal('Phantom III');
@@ -33,6 +32,17 @@ describe('Drone Routes', function () {
         });
     });
   });
-  //TODO: when PUT, returns note
+  describe('DELETE /api/drone', function () {
+    it('should delete a drone', function (done) {
+      request.delete(`localhost:8000/api/drone?id=${drone.id}`)
+        .end(function (err, res) {
+          console.log('line 40 test', res.body);
+          if (err) return done(err);
+          expect(res.status).to.equal(204);
+          expect(res.body).to.be.empty;
+          done();
+        });
+    });
+  });
   //TODO: for delete, does not return a note. Just status code 204, and make call and verify not there.
 });
