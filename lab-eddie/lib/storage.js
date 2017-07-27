@@ -19,10 +19,9 @@ exports.fetchItem = function(category, id) {
     
     var cat = storage[category];
     if(!cat) return reject(new Error('Category not found'));
-    if(!id) return resolve(cat)
+    if(!id) return resolve(Object.keys(cat))
 
     var item = cat[id]
-    console.log(item)
     if(!item) return reject(new Error('Item not found.'))
 
     resolve(item);

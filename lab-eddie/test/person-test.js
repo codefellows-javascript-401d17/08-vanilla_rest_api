@@ -23,6 +23,9 @@ describe('person Routes', function() {
         person = res.body;
         done();
       });
+      request.post('localhost:3000/api/person')
+      .send({ first: 'Silas', last: 'Fallendorf', age: 26, job: 'bum' })
+      .end();
     });
   });
   describe('GET: /api/person', function() {
@@ -37,6 +40,11 @@ describe('person Routes', function() {
         expect(res.body.job).to.equal('bum');
         console.log('GET request person:', res.body);
         done();
+        request.get(`localhost:3000/api/person`)
+        .end((err, res) => {
+        if (err) return done(err);
+        console.log(res.body);
+        });
       });
     });
   });

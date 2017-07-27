@@ -43,6 +43,26 @@ const modelGet = function(model) {
       });
 
       return;
+    } else if (req.url.query) {
+      storage.fetchItem(`${model}`)
+      .then( person => {
+        res.writeHead(200, {
+          'Content-Type': 'application/json'
+        });
+
+        res.write(JSON.stringify(person));
+        res.end();
+      })
+      .catch( err => {
+        console.error(err);
+        res.writeHead(404, {
+          'Content-Type': 'text/plain'
+        });
+        res.write(`${model} not found`);
+        res.end();
+      });
+
+      return;
     };
 
     res.writeHead(400, {
