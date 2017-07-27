@@ -73,7 +73,7 @@ const modelRoutes = function(model) {
     if (req.url.query.id) {
       storage.deleteItem(`${model}`, req.url.query.id)
       .then( person => {
-        res.writeHead(200, {
+        res.writeHead(202, {
           'Content-Type': 'application/json'
         });
 
