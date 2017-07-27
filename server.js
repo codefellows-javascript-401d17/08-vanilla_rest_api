@@ -4,7 +4,7 @@ const http = require('http');
 const Note = require('./model/note.js');
 const Router = require('./lib/router.js');
 const storage = require('./lib/storage.js');
-const PORT = process.env.PORT || 8000;
+const PORT = process.env.PORT || 3000;
 const router = new Router();
 
 router.get('/api/note', function(req, res) {
@@ -29,7 +29,7 @@ router.get('/api/note', function(req, res) {
     });
 
     return;
-  };
+  }
 
   res.writeHead(400, {
     'Content-Type': 'text/plain'
@@ -50,8 +50,7 @@ router.post('/api/note', function(req, res) {
 
     res.write(JSON.stringify(note));
     res.end();
-  }
-  catch (err) {
+  } catch (err) {
     console.error(err);
     res.writeHead(400, {
       'Content-Type': 'text/plain'
@@ -63,6 +62,6 @@ router.post('/api/note', function(req, res) {
 
 const server = http.createServer(router.route());
 
-server.listen(PORT, function() {
+server.listen(PORT, () => {
   console.log(`Server listening on PORT: ${PORT}`);
 });
