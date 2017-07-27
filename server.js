@@ -29,7 +29,6 @@ router.get('/api/beer', function(req, res) {
 
     return;
   }
-
   res.writeHead(400, {
     'Content-Type': 'text/plain'
   });
@@ -55,6 +54,35 @@ router.post('/api/beer', function(req, res) {
     res.end();
   }
 });
+
+router.delete('/api/beer', function(req, res){
+  if (req.url.query.id) {
+    storage.deleteItem('beer', req.url.query.id)
+    .then( () => {
+      res.writeHead(204, {
+        'Content-Type': 'test/plain'
+      });
+      res.write('beer deleted');
+      res.end();
+    })
+    .catch( err => {
+      console.error(err);
+      res.writeHead(404, {
+        'Content-Type': 'text/plain'
+      });
+      res.write('beer not found');
+      res.end();
+    });
+
+    return;
+  }
+  res.writeHead(400, {
+    'Content-Type': 'text/plain'
+  });
+  res.write('bad request');
+  res.end();
+});
+
 
 const server = http.createServer(router.route());
 

@@ -18,7 +18,6 @@ describe('Beer Routes', function() {
         expect(res.body.name).to.equal('test name');
         expect(res.body.style).to.equal('test style');
         expect(res.body.IBU).to.equal('test IBU');
-        console.log('POST request beer:', res.body);
         beer = res.body;
         done();
       });
@@ -45,7 +44,6 @@ describe('Beer Routes', function() {
         expect(res.body.name).to.equal('test name');
         expect(res.body.style).to.equal('test style');
         expect(res.body.IBU).to.equal('test IBU');
-        console.log('GET request beer:', res.body);
         done();
       });
     });
@@ -66,6 +64,17 @@ describe('Beer Routes', function() {
       request.get('localhost:8000/api/beer?id=')
       .end((err, res) => {
         expect(res.status).to.equal(400);
+        done();
+      });
+    });
+  });
+
+  describe('DELETE: /api/beer', function() {
+    it('should return 204', function(done) {
+      request.delete(`localhost:8000/api/beer?id=${beer.id}`)
+      .end((err, res) => {
+        if (err) return done(err);
+        expect(res.status).to.equal(204);
         done();
       });
     });
