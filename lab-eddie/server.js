@@ -2,15 +2,15 @@
 
 const http = require('http');
 const Person = require('./model/person.js');
-// const Car = require('./model/car.js');
+const Car = require('./model/car.js');
 const Router = require('./lib/router.js');
 const storage = require('./lib/storage.js');
 const PORT = process.env.PORT || 5000;
 const router = new Router();
 
 const models = {
-  person : Person
-  // car: Car
+  person : Person,
+  car: Car
 }
 
 const modelRoutes = function(model) {
@@ -102,7 +102,7 @@ const modelRoutes = function(model) {
 }
 
 modelRoutes('person');
-// modelRoutes('car');
+modelRoutes('car');
 
 const server = http.createServer(router.route());
   
