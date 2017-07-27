@@ -23,11 +23,30 @@ describe('person Routes', function() {
         person = res.body;
         done();
       });
-      request.post('localhost:3000/api/person')
-      .send({ first: 'Silas', last: 'Fallendorf', age: 26, job: 'bum' })
-      .end();
     });
   });
+  describe('GET: /api/person (No IDs)', function() {
+    it('should return an array of IDs', function(done) {
+      request.post('localhost:3000/api/person')
+      .send({ first: 'John', last: 'Doe', age: 69, job: 'ninja' })
+      .end((err) => {
+        if (err) return done(err);
+      });
+      request.post('localhost:3000/api/person')
+      .send({ first: 'Jane', last: 'Doe', age: 99, job: 'wizard' })
+      .end((err) => {
+        if (err) return done(err);
+      });
+      request.get('localhost:3000/api/person')
+      .end((err, res) => {
+        if(err) return done(err);
+        expect(Array.isArray(res.body)).to.equal(true);
+        expect(res.body.includes(person.id));   
+        console.log('Array of IDs for person: ', res.body)         
+        done()
+      })
+    })
+  })
   describe('GET: /api/person', function() {
     it('should return a person', function(done) {
       request.get(`localhost:3000/api/person?id=${person.id}`)
@@ -40,11 +59,6 @@ describe('person Routes', function() {
         expect(res.body.job).to.equal('bum');
         console.log('GET request person:', res.body);
         done();
-        request.get(`localhost:3000/api/person`)
-        .end((err, res) => {
-        if (err) return done(err);
-        console.log(res.body);
-        });
       });
     });
   });
