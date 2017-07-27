@@ -23,8 +23,23 @@ router.get('/api/drone', function (req, rsp) {
         });
         rsp.write('bad request');
         rsp.end();
-      })
+      });
     return;  //TODO: why this here?
+  }
+  if (!req.url.query.id) {
+    storage.fetchAllItems('drone')
+      .then(function (drones) {
+        console.log('line 32', drones);
+        rsp.writeHead(200);
+        rsp.write(JSON.stringify(drones));
+        rsp.end();
+      })
+      .catch(function (err) {
+        console.error(err);
+        rsp.writeHead(404);
+        rsp.end();
+      });
+    return;
   }
   rsp.writeHead(400, {
     'Content-type': 'text/plain'
@@ -55,11 +70,11 @@ router.post('/api/drone', function (req, rsp) {
 router.delete('/api/drone', function (req, rsp) {
   if (req.url.query.id) {
     storage.deleteItem('drone', req.url.query.id)
-      .then( () => {
+      .then(() => {
         rsp.writeHead(204);
         rsp.end();
       })
-      .catch(function(err) {
+      .catch(function (err) {
         console.error(err);
         rsp.writeHead(400);
         rsp.write('drone not found');

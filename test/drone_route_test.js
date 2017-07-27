@@ -36,6 +36,16 @@ describe('Drone Routes', function () {
           done();
         });
     });
+    it('should return all drones', function (done) {
+      request.get('localhost:8000/api/drone')
+        .end(function (err, res) {
+          if (err) return done(err);
+          console.log('test, ', res);
+          expect(res.status).to.equal(200);
+          expect(JSON.parse(res.text)[0]).to.equal(drone.id)
+          done();
+        });
+    });
   });
   describe('DELETE /api/drone', function () {
     it('should delete a drone', function (done) {
