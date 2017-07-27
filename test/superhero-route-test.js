@@ -11,31 +11,24 @@ describe('Superhero Routes', function() {
 
   describe('POST: /api/superhero', function() {
     it('should return a superhero', function(done) {
-      request.post(`${PORT}/api/superhero`)
-      .send({name: 'test name', comicUni: 'test comic universe'})
+      request.post(`localhost:${PORT}/api/superhero`)
+      .send({name: 'name', comicUni: 'comicUni'})
       .end((err, res) => {
         if (err) return done(err);
         expect(res.status).to.equal(200);
-        expect(res.body.name).to.equal('test name');
-        expect(res.body.comicUni).to.equal('test comic universe');
-        console.log('POST request superhero:', res.body);
+        expect(res.body.name).to.equal('name');
+        expect(res.body.comicUni).to.equal('comicUni');
         superhero = res.body;
         done();
       });
     });
-  });
 
-  describe('POST: /api/superhero', function() {
     it('should return a bad request', function(done) {
-      request.post(`${PORT}/api/somefakepath`)
-      .send({name: 'test name', comicUni: 'test comic universe'})
+      request.post(`localhost:${PORT}/api/superhero`)
+      .send({viewers: '10000', conceptArt: 'comic art'})
       .end((err, res) => {
-        if (err) return done(err);
         expect(res.status).to.equal(400);
-        expect(res.body.name).to.equal('test name');
-        expect(res.body.comicUni).to.equal('test comic universe');
-        console.log('POST request superhero:', res.body);
-        superhero = res.body;
+        expect(res.text).to.equal('bad request');
         done();
       });
     });
@@ -43,43 +36,32 @@ describe('Superhero Routes', function() {
 
   describe('GET: /api/superhero', function() {
     it('should return a superhero', function(done) {
-      request.get(`${PORT}/api/superhero?id=${superhero.id}`)
+      request.get(`localhost:${PORT}/api/superhero?id=${superhero.id}`)
      .end((err, res) => {
        if (err) return done(err);
        expect(res.status).to.equal(200);
-       expect(res.body.name).to.equal('test name');
-       expect(res.body.content).to.equal('test comicUni');
-       console.log('GET request superhero:', res.body);
+       expect(res.body.name).to.equal('name');
+       expect(res.body.comicUni).to.equal('comicUni');
        done();
      });
     });
-  });
 
-  describe('GET: /api/superhero', function() {
     it('should return a bad request', function(done) {
-      request.get(`${PORT}/api/superhero?id=${superhero.id}`)
+      request.get(`localhost:${PORT}/api/superhero`)
      .end((err, res) => {
-       if (err) return done(err);
        expect(res.status).to.equal(400);
-       expect(res.body.name).to.equal('');
-       expect(res.body.content).to.equal('');
-       console.log('GET request note:', res.body);
+       expect(res.text).to.equal('bad request');
        done();
      });
     });
   });
 
-  describe('GET: /api/superhero', function() {
-    it('should return with superhero not found', function(done) {
-      request.get(`${PORT}/api/superhero?id=${fakeid.id}`)
-     .end((err, res) => {
-       if (err) return done(err);
-       expect(res.status).to.equal(404);
-       expect(res.body.name).to.equal('test name');
-       expect(res.body.content).to.equal('test comicUni');
-       console.log('GET request note:', res.body);
-       done();
-     });
-    });
+  it('should return with superhero not found', function(done) {
+    request.get(`localhost:${PORT}/api/superhero?id=12345`)
+   .end((err, res) => {
+     expect(res.status).to.equal(404);
+     expect(res.text).to.equal('superhero not found');
+     done();
+   });
   });
 });
