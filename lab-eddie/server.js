@@ -15,8 +15,13 @@ const models = {
   dog: Dog
 }
 
-const modelRoutes = function(model) {
+const modelAllRoutes = function(model) {
+  modelGet(model);
+  modelPost(model);
+  modelDelete(model);
+}
 
+const modelGet = function(model) {
   router.get(`/api/${model}`, function(req, res) {
     if (req.url.query.id) {
       storage.fetchItem(`${model}`, req.url.query.id)
@@ -46,7 +51,9 @@ const modelRoutes = function(model) {
     res.write('bad request');
     res.end();
   });
+};
 
+const modelPost = function(model) {
   router.post(`/api/${model}`, function(req, res) {
     try {
       let params = [];
@@ -70,6 +77,9 @@ const modelRoutes = function(model) {
       res.end();
     }
   });
+}
+
+const modelDelete = function(model) {
 
   router.delete(`/api/${model}`, function(req, res) {
     if (req.url.query.id) {
@@ -93,7 +103,7 @@ const modelRoutes = function(model) {
 
       return;
     };
-                  
+
     res.writeHead(400, {
       'Content-Type': 'text/plain'
     });
@@ -103,9 +113,9 @@ const modelRoutes = function(model) {
 
 }
 
-modelRoutes('person');
-modelRoutes('car');
-modelRoutes('dog')
+modelAllRoutes('person');
+modelAllRoutes('car');
+modelAllRoutes('dog')
 
 const server = http.createServer(router.route());
   
