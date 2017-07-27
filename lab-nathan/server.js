@@ -30,7 +30,7 @@ router.handleGet('/api/note', function(request, response) {
   let id = request.url.query.id;
 
   if (!id) {
-    respond(response, 400, 'No id provided.');
+    respond(response, 200, JSON.stringify(Object.keys(storage['notes'])), 'application/json');
     return;
   }
 
@@ -44,12 +44,40 @@ router.handleGet('/api/note', function(request, response) {
   }
 });
 
-function respond(response, statusCode, message, contentType = 'text/plain') {
-  response.writeHead(statusCode, {
-    'Content-Type': contentType
-  });
+router.handleDelete('/api/note', function(request, response) {
+  let id = request.url.query.id;
 
-  response.write(message);
+  if (!id) {
+    respond(response, 200, 'No id provided.');
+    return;
+  }
+
+  try {
+    storage.remove('notes', id);
+    respond(response, 204, null, null);
+  } 
+  catch(error) {
+    console.error(error);
+    respond(response, 404, error.message);
+  }
+});
+
+function respond(response, statusCode, message, contentType = 'text/plain') {
+  if (contentType) {
+    let headers = {
+      'Content-Type': contentType
+    };
+
+    response.writeHead(statusCode, headers);
+  }
+  else {
+    response.writeHead(statusCode);
+  }  
+
+  if (message) {
+    response.write(message);
+  }
+
   response.end();
 }
 
