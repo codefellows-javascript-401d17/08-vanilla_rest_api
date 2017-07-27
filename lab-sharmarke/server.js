@@ -8,7 +8,7 @@ const PORT = process.env.PORT || 3000;
 const router = new Router();
 
 //GET Route
-router.get('/api/note', function(req, res) {
+router.get('/api/car', function(req, res) {
   if (req.url.query.id) {
     storage.fetchItem('car', req.url.query.id)
     .then( car => {
@@ -31,7 +31,7 @@ router.get('/api/note', function(req, res) {
     return;
   }
 
-  res.write(400, {
+  res.writeHead(400, {
     'Content-Type': 'text/plain'
   });
   res.write('bad request');
@@ -41,7 +41,7 @@ router.get('/api/note', function(req, res) {
 //POST Route
 router.post('/api/car', function(req, res) {
   try {
-    var car = new Car(req.body.make, req.body.model);
+    var car = new Car(req.body.make, req.body.model, req.body.year);
     storage.createItem('car', car);
     res.writeHead(200, {
       'Content-Type': 'application/json'
