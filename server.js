@@ -39,7 +39,7 @@ router.get('/api/pokemon', function(req, res) {
 
 router.post('/api/pokemon', function(req, res) {
   try {
-    var pokemon = new pokemon(req.body.name, req.body.style, req.body.IBU);
+    var pokemon = new Pokemon(req.body.name, req.body.type, req.body.gen);
     storage.createItem('pokemon', pokemon);
     res.writeHead(200, {
       'Content-Type': 'application/json'

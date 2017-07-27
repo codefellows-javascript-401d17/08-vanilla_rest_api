@@ -7,7 +7,7 @@
     "test": "test"
   },
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
+    "test": "mocha",
     "start": "node server.js",
     "lint": "eslintrc"
   },
@@ -23,7 +23,7 @@
   },
   "homepage": "https://github.com/Loaye/08-vanilla_rest_api#readme",
   "devDependencies": {
-    "chair": "0.0.0",
+    "chai": "^4.1.0",
     "mocha": "^3.4.2",
     "superagent": "^3.5.2"
   },

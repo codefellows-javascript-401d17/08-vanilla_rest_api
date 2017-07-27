@@ -54,7 +54,7 @@ describe('pokemon routes', function() {
     it('should return 400 bad request', function(done) {
       request.get('localhost:8000/api/pokemon?id=')
       .end((err, res) => {
-        expect(res.status)to.equal(400);
+        expect(res.status).to.equal(400);
         done();
       });
     });
