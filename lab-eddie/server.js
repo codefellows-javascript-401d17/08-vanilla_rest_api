@@ -1,16 +1,18 @@
 'use strict'
 
 const http = require('http');
-const Person = require('./model/person.js');
-const Car = require('./model/car.js');
 const Router = require('./lib/router.js');
 const storage = require('./lib/storage.js');
+const Person = require('./model/person.js');
+const Car = require('./model/car.js');
+const Dog = require('./model/dog.js')
 const PORT = process.env.PORT || 5000;
 const router = new Router();
 
 const models = {
   person : Person,
-  car: Car
+  car: Car,
+  dog: Dog
 }
 
 const modelRoutes = function(model) {
@@ -91,7 +93,7 @@ const modelRoutes = function(model) {
 
       return;
     };
-
+                  
     res.writeHead(400, {
       'Content-Type': 'text/plain'
     });
@@ -103,6 +105,7 @@ const modelRoutes = function(model) {
 
 modelRoutes('person');
 modelRoutes('car');
+modelRoutes('dog')
 
 const server = http.createServer(router.route());
   
