@@ -5,49 +5,41 @@ const request = require('superagent');
 
 require('../server.js');
 
-describe('Car Routes', function() {
+describe('Car Routes', function(){
   var car = null;
-
- describe('POST: /api/car', function() {
-    it('should return a car', function(done) {
+  describe('Post: /api/car', function(){
+    it('should post', function(done){
       request.post('localhost:3000/api/car')
-      .send({name: 'test name', brand: 'test brand'})
+      .send({name: 'Miata', brand: 'Mazda'})
       .end((err, res) => {
-        if(err) return done(err);
         expect(res.status).to.equal(200);
-        expect(res.body.name).to.equal('test name');
-        expect(res.body.brand).to.equal('test brand');
+        expect(res.body.name).to.equal('Miata');
+        expect(res.body.brand).to.equal('Mazda');
         car = res.body;
         done();
       });
     });
   });
-
-  describe('POST: /api/car', function() {
-    it('should return 400', function(done) {
-      request.post('localhost:3000/api/car')
-      .send({})
-      .end((err, res) => {
-        expect(res.status).to.equal(400);
+  describe('Get: /api/car', function(){
+    it('should retrieve', function(done){
+      request.get(`localhost:3000/api/car?id=${car.id}`)
+      .end((err, res) =>{
+        expect(res.status).to.equal(200);
+        expect(res.body.id).to.equal(car.id);
+        expect(res.body.name).to.equal('Miata');
+        expect(res.body.brand).to.equal('Mazda');
         done();
       });
     });
   });
-
-  describe('GET: /api/car', function() {
-    it('should return 400 bad request', function(done) {
-      request.get('localhost:3000/api/car?id=')
-      .end((err, res) => {
-        expect(res.status).to.equal(400);
-        done();
-      });
-    });
-
-    it('should return 404', function(done) {
-      request.get('localhost:3000/api/car?id=5432')
-      .end((err, res) => {
-        expect(res.status).to.equal(404);
-        console.log('get 404');
+  describe('Delete: /api/car', function(){
+    it('should delete', function(done){
+      request.delete(`localhost:3000/api/car?id=${car.id}`)
+      .end((err, res) =>{
+        expect(res.status).to.equal(204);
+        expect(res.body.id).to.equal(undefined);
+        expect(res.body.name).to.equal(undefined);
+        expect(res.body.brand).to.equal(undefined);
         done();
       });
     });
