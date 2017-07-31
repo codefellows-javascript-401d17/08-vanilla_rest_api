@@ -1,4 +1,13 @@
-![cf](https://i.imgur.com/7v5ASc8.png) Lab 08: Vanilla REST API
+This application is a nonpresistant database for cataloging your cars and there make you can preform:
+---
+-GET
+-POST
+-PUT
+-Delete
+---
+Methods to minipulate this data to do so I made the default port 3000 for id you have a designated PORT it will use that. Start the server and lof in with another terminal and use http to preform requests.
+
+<!-- ![cf](https://i.imgur.com/7v5ASc8.png) Lab 08: Vanilla REST API
 ======
 
 ## Submission Instructions
@@ -54,4 +63,4 @@
  * `POST`: test 200, it should respond with the body content for a post request with a valid body
 
 ## Bonus
-* **2pts:** a `GET` request to `/api/simple-resource-name` with no **?id=** should return an array of all of the ids for that resource
+* **2pts:** a `GET` request to `/api/simple-resource-name` with no **?id=** should return an array of all of the ids for that resource -->
