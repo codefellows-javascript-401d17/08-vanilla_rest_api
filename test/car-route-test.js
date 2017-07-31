@@ -8,7 +8,7 @@ require('../server.js');
 describe('Car Routes', function(){
   var car = null;
   describe('Post: /api/car', function(){
-    it('should post', function(done){
+    it('should POST: 200', function(done){
       request.post('localhost:3000/api/car')
       .send({name: 'Miata', brand: 'Mazda'})
       .end((err, res) => {
@@ -19,9 +19,10 @@ describe('Car Routes', function(){
         done();
       });
     });
+
   });
   describe('Get: /api/car', function(){
-    it('should retrieve', function(done){
+    it('should GET :200  ', function(done){
       request.get(`localhost:3000/api/car?id=${car.id}`)
       .end((err, res) =>{
         expect(res.status).to.equal(200);
@@ -44,4 +45,28 @@ describe('Car Routes', function(){
       });
     });
   });
+
+    it('should POST: 400', function (done) {
+      request.post('localhost:3000/api/car')
+        .send({ name: 'Miata', notBrand: 'Mazda' })
+        .end((err, res) => {
+          expect(res.status).to.equal(400);
+          car = res.body;
+          done();
+        });
+    });
+    it('should GET: 404', function (done) {
+      request.get(`localhost:3000/api/car?id=${car.id+1}`)
+        .end((err, res) => {
+          expect(res.status).to.equal(404);
+          done();
+        });
+    });
+    it('should GET: 400', function (done) {
+      request.get(`localhost:3000/api/car?notID=${car.id}`)
+        .end((err, res) => {
+          expect(res.status).to.equal(400);
+          done();
+        });
+    });
 });
